@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actavia Monitoring - Transparansi KIPK</title>
+    <!-- Menggunakan font Inter dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --danger: #dc2626;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 { font-weight: 600; margin-top: 0; }
+
+        .grid-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            border-left: 4px solid var(--primary);
+            background: #eff6ff;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button.report { background: var(--danger); }
+
+        button:hover { opacity: 0.9; }
+
+        .footer-text {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Actavia Project</div>
+    <div>Beranda • Panduan • Kontak</div>
+</nav>
+
+<div class="container">
+    <!-- Section 1: Dashboard Verifikasi -->
+    <div class="card">
+        <h2>Dashboard Verifikasi Dana</h2>
+        <p>Periksa jumlah bantuan yang seharusnya Anda terima semester ini.</p>
+        <div class="grid-stats">
+            <div class="stat-item">
+                <span class="label">Biaya Hidup (Bruto)</span>
+                <span class="stat-value">Rp5.700.000</span>
+            </div>
+            <div class="stat-item" style="border-color: var(--danger); background: #fef2f2;">
+                <span class="label">Potongan Ilegal Terdeteksi</span>
+                <span class="stat-value">Rp0</span>
+            </div>
+            <div class="stat-item" style="border-color: #10b981; background: #ecfdf5;">
+                <span class="label">Status Pencairan</span>
+                <span class="stat-value" style="font-size: 1rem;">Sudah Disalurkan Bank</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Form Whistleblowing -->
+    <div class="card">
+        <h2>Lapor Pemotongan Dana</h2>
+        <p>Identitas Anda akan disamarkan secara sistem menggunakan enkripsi end-to-end.</p>
+        <form id="reportForm">
+            <div class="form-group">
+                <label>Jenis Pungutan/Pemotongan</label>
+                <select>
+                    <option>Pungutan Infaq/Sumbangan Wajib</option>
+                    <option>Biaya Administrasi Kampus</option>
+                    <option>Pemotongan oleh Oknum Mahasiswa</option>
+                    <option>Lainnya</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nominal yang Dipotong (Rp)</label>
+                <input type="number" placeholder="Contoh: 500000">
+            </div>
+            <div class="form-group">
+                <label>Bukti Pendukung (Screenshot/Rekaman/Kuitansi)</label>
+                <input type="file">
+            </div>
+            <div class="form-group">
+                <label>Deskripsi Kejadian</label>
+                <textarea rows="4" placeholder="Ceritakan kronologi singkat..."></textarea>
+            </div>
+            <button type="submit" class="report">Kirim Laporan Anonim</button>
+        </form>
+    </div>
+</div>
+
+<div class="footer-text">
+    &copy; 2026 Actavia Project - Sistem Integritas Akuntansi Pendidikan
+</div>
+
+<script>
+    document.getElementById('reportForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Laporan Anda telah dienkripsi dan dikirim ke sistem pusat pengawasan. Terima kasih telah berani melapor!');
+    });
+</script>
+
+</body>
+</html>

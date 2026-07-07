@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduWatch – Kawal Dana, Cerdaskan Bangsa</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f2042;
+    --blue: #1a3a6e;
+    --blue-mid: #1e4fa0;
+    --accent: #3b82f6;
+    --accent-light: #60a5fa;
+    --teal: #06b6d4;
+    --white: #ffffff;
+    --gray-100: #f0f4ff;
+    --gray-200: #e0e8f8;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --card-bg: rgba(255,255,255,0.06);
+    --card-border: rgba(255,255,255,0.12);
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: var(--font-body);
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ========== SCROLLBAR ========== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--blue-mid); border-radius: 3px; }
+
+  /* ========== PAGE SYSTEM ========== */
+  .page { display: none; animation: fadeIn 0.4s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ========== HEADER ========== */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10, 22, 40, 0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--card-border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .header-left {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .logo-mark {
+  width: 38px; height: 38px;
+  background: white;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 16px;
+  color: black;
+  box-shadow: 0 0 16px rgba(59,130,246,0.4);
+  overflow: hidden; /* Tambahan: agar sudut gambar ikut melengkung sesuai border-radius */
+}
+
+/* Tambahkan kode baru ini di bawahnya */
+.logo-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Menjaga proporsi gambar agar tidak gepeng */
+}
+  .logo-text {
+    display: flex; flex-direction: column; line-height: 1.1;
+  }
+  .logo-text .brand { font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--white); }
+  .logo-text .tagline { font-size: 10px; color: var(--accent-light); font-weight: 500; }
+
+  nav { display: flex; gap: 2px; }
+  nav a {
+    padding: 7px 14px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    color: var(--gray-400); text-decoration: none;
+    cursor: pointer; transition: all 0.2s;
+  }
+  nav a:hover, nav a.active { color: var(--white); background: rgba(59,130,246,0.15); }
+  nav a.active { color: var(--accent-light); }
+
+  .header-right { display: flex; align-items: center; gap: 10px; }
+
+  .btn-notif {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative; font-size: 16px;
+    transition: background 0.2s;
+  }
+  .btn-notif:hover { background: rgba(59,130,246,0.2); }
+  .notif-dot {
+    position: absolute; top: 6px; right: 6px;
+    width: 8px; height: 8px; background: var(--teal);
+    border-radius: 50%; border: 2px solid var(--navy);
+  }
+
+  .btn-login {
+    padding: 8px 20px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    color: white; font-size: 13px; font-weight: 700;
+    border: none; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+  }
+  .btn-login:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(59,130,246,0.4); }
+
+  /* ========== HERO ========== */
+  .hero {
+    background: linear-gradient(160deg, #0a1628 0%, #0f2042 35%, #1a3a6e 70%, #0d2856 100%);
+    padding: 5rem 2rem 4rem;
+    position: relative; overflow: hidden;
+    min-height: 520px; display: flex; align-items: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -80px; left: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: flex; align-items: center; justify-content: space-between; gap: 3rem;
+  }
+
+  .hero-content { flex: 1; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3);
+    padding: 5px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; color: var(--accent-light);
+    margin-bottom: 1.2rem;
+  }
+  .hero-badge::before { content: '●'; color: var(--teal); font-size: 8px; }
+
+  .hero h1 {
+    font-family: var(--font-display); font-size: 4rem; font-weight: 800;
+    line-height: 1.0; margin-bottom: 0.3rem;
+    background: linear-gradient(135deg, #fff 30%, var(--accent-light));
+    background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;
+    color: var(--teal); margin-bottom: 1rem;
+  }
+  .hero p {
+    font-size: 15px; color: var(--gray-400); line-height: 1.7;
+    max-width: 480px; margin-bottom: 2rem;
+  }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .btn-primary {
+    padding: 13px 28px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    color: white; font-size: 14px; font-weight: 700;
+    border: none; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 6px 20px rgba(59,130,246,0.35);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59,130,246,0.45); }
+
+  .btn-outline {
+    padding: 13px 28px; border-radius: 10px;
+    background: transparent; color: white; font-size: 14px; font-weight: 700;
+    border: 1.5px solid rgba(255,255,255,0.25); cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+
+  .hero-visual {
+    flex-shrink: 0; position: relative; z-index: 1;
+  }
+  .hero-emblem {
+    width: 300px; height: 300px;
+    background: white;
+    border: 2px solid rgba(59,130,246,0.3);
+    border-radius: 28px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(59,130,246,0.15);
+    font-size: 80px;
+    position: relative;
+  }
+  /* Tambahkan kode baru ini di bawahnya */
+  .hero-emblem img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Menjaga proporsi gambar agar tidak gepeng */
+  }
+  .hero-emblem::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: 28px;
+    background: linear-gradient(135deg, rgba(59,130,246,0.1), transparent);
+  }
+
+  /* ========== SECTIONS ========== */
+  .section {
+    max-width: 1100px; margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display); font-size: 1.7rem; font-weight: 800;
+    margin-bottom: 0.5rem; text-align: center;
+  }
+  .section-subtitle {
+    text-align: center; color: var(--gray-400); font-size: 14px;
+    margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+
+  /* ========== WHY SECTION ========== */
+  .why-section { background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .why-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 2rem 1.5rem; text-align: center;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .why-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    border-radius: 3px 3px 0 0;
+  }
+  .why-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.3); }
+  .why-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+  .why-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 0.5rem; }
+  .why-card p { font-size: 13px; color: var(--gray-400); line-height: 1.6; }
+
+  /* ========== FEATURES ========== */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Atau sesuaikan dengan grid kamu */
+    gap: 20px;
+  }
+  .feat-card {
+    display: flex;
+    flex-direction: column; /* Mengatur isi kartu berderet ke bawah */
+    height: 100%;          /* Memastikan semua kartu memiliki tinggi yang sama */
+    padding: 20px;         /* Sesuaikan dengan padding kamu */
+    border: 1px solid #ddd;/* Contoh border */
+    border-radius: 8px;
+    background: linear-gradient(160deg, rgba(26,58,110,0.6), rgba(15,32,66,0.8));
+    border: 1px solid var(--card-border); border-radius: 16px;
+    padding: 1.8rem 1.4rem; cursor: pointer;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .feat-card p {
+    flex-grow: 1;          /* KUNCI UTAMA: Memaksa paragraf mengambil sisa ruang yang kosong */
+    margin-bottom: 20px;   /* Memberikan jarak aman antara teks terakhir dengan button */
+  }
+  .feat-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.4); }
+  .feat-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: linear-gradient(90deg, var(--accent), var(--teal));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .feat-card:hover::after { opacity: 1; }
+  .feat-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .feat-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 0.4rem; }
+  .feat-card p { font-size: 12px; color: var(--gray-400); line-height: 1.5; margin-bottom: 1rem; }
+  .btn-explore {
+    padding: 7px 16px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.25);
+    color: var(--accent-light); cursor: pointer; transition: all 0.2s;
+  }
+  .btn-explore:hover {
+     background: rgba(59,130,246,0.3);
+    justify-content: center;
+    margin-top: auto;       /* Memastikan button otomatis terdorong ke paling bawah */
+  }
+
+  /* ========== ABOUT SECTION ========== */
+  .about-section {
+    background: linear-gradient(135deg, rgba(26,58,110,0.3), rgba(6,182,212,0.05));
+    border-top: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .about-inner {
+    display: flex; align-items: center; gap: 4rem;
+  }
+  .about-text { flex: 1; }
+  .about-text h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
+  .about-text p { color: var(--gray-400); font-size: 14px; line-height: 1.8; margin-bottom: 1rem; }
+  .member-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .member-tag {
+    padding: 5px 14px; border-radius: 100px; font-size: 12px; font-weight: 600;
+    background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2);
+    color: var(--accent-light);
+  }
+  .about-visual { flex-shrink: 0; }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+  }
+  .stat-box {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.2rem; text-align: center;
+  }
+  .stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--accent-light); }
+  .stat-lbl { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+  /* ========== TESTIMONIALS ========== */
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .testi-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 1.5rem;
+  }
+  .testi-quote { font-size: 13px; color: var(--gray-200); line-height: 1.7; margin-bottom: 1rem; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 10px; }
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+  }
+  .testi-name { font-size: 13px; font-weight: 700; }
+  .testi-univ { font-size: 11px; color: var(--gray-400); }
+
+  /* ========== CTA SECTION ========== */
+  .cta-section {
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue));
+    border-top: 1px solid rgba(59,130,246,0.3);
+    border-bottom: 1px solid rgba(59,130,246,0.3);
+  }
+  .cta-inner {
+    text-align: center; padding: 4rem 2rem; max-width: 700px; margin: 0 auto;
+  }
+  .cta-inner h2 {
+    font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
+    margin-bottom: 1rem; line-height: 1.3;
+  }
+  .cta-inner p { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 2rem; }
+
+  /* ========== DASHBOARD UTAMA ========== */
+  .dash-header {
+    background: linear-gradient(160deg, #0a1628, #0f2042 60%, #1a3a6e);
+    padding: 3rem 2rem 2rem;
+  }
+  .dash-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .dash-sub { color: var(--gray-400); font-size: 14px; }
+  .dash-body { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+  .budget-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+  .budget-card {
+    border-radius: 18px; padding: 2rem; position: relative; overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .budget-card:hover { transform: translateY(-3px); }
+  .budget-card.mbg { background: linear-gradient(135deg, #1e4fa0, #2563eb); }
+  .budget-card.kip { background: linear-gradient(135deg, #0e7490, #06b6d4); }
+  .budget-card::before {
+    content: ''; position: absolute; top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.08); border-radius: 50%;
+  }
+  .budget-label { font-size: 12px; font-weight: 600; opacity: 0.8; margin-bottom: 0.4rem; }
+  .budget-tag {
+    display: inline-block; padding: 3px 10px; border-radius: 100px;
+    background: rgba(255,255,255,0.15); font-size: 10px; font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  .budget-amount { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1.1; }
+  .budget-year { font-size: 12px; opacity: 0.7; margin-top: 0.3rem; }
+  .budget-update { font-size: 11px; opacity: 0.6; margin-top: 1rem; }
+
+  .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  .chart-box {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 1.5rem;
+  }
+  .chart-title { font-size: 14px; font-weight: 700; margin-bottom: 1.2rem; }
+
+  .bar-chart { display: flex; flex-direction: column; gap: 12px; }
+  .bar-item { display: flex; flex-direction: column; gap: 4px; }
+  .bar-label { font-size: 12px; color: var(--gray-400); display: flex; justify-content: space-between; }
+  .bar-track { height: 10px; background: rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 10px; transition: width 1s ease; }
+  .bar-fill.mbg { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+  .bar-fill.kip { background: linear-gradient(90deg, #0891b2, #06b6d4); }
+
+  .pie-visual {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  }
+  .pie-ring {
+    width: 110px; height: 110px; border-radius: 50%;
+    background: conic-gradient(#2563eb 0deg 252deg, #06b6d4 252deg 360deg);
+    display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .pie-ring::before {
+    content: ''; width: 70px; height: 70px;
+    background: var(--card-bg); border-radius: 50%; position: absolute;
+  }
+  .pie-legend { display: flex; flex-direction: column; gap: 8px; align-self: flex-start; }
+
+  /* ========== PETA INKLUSIVITAS ========== */
+  .map-wrap { width: 100%; overflow-x: auto; }
+  .map-wrap svg { width: 100%; min-width: 640px; height: auto; display: block; }
+  .map-wrap circle { cursor: pointer; transition: r 0.15s ease, stroke-width 0.15s ease; }
+  .map-wrap circle:hover { r: 10; stroke: #fff; stroke-width: 2; }
+  .map-legend { display: flex; align-items: center; gap: 10px; margin-top: 1rem; font-size: 11px; color: var(--gray-400); }
+  .map-legend-bar { flex: 1; height: 8px; border-radius: 8px; background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981); }
+  .map-note { font-size: 12px; color: var(--gray-400); line-height: 1.6; margin-bottom: 1rem; }
+  .map-extremes { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.2rem; }
+  .map-extreme-col { background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); border-radius: 12px; padding: 0.9rem 1rem; }
+  .map-extreme-col h4 { font-size: 12px; font-weight: 700; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 6px; }
+  .map-extreme-list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--gray-200); }
+  .map-extreme-list li { display: flex; justify-content: space-between; gap: 8px; }
+  .map-extreme-list .val { font-weight: 700; }
+  @media (max-width: 640px) {
+    .map-extremes { grid-template-columns: 1fr; }
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .alert-box {
+    background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(239,68,68,0.08));
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 14px; padding: 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .alert-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .alert-text { font-size: 14px; font-weight: 600; color: #fcd34d; line-height: 1.5; }
+
+  .table-box {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; overflow: hidden; margin-bottom: 2rem;
+  }
+  .table-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--card-border);
+  }
+  .table-head h3 { font-size: 14px; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: rgba(59,130,246,0.08); padding: 10px 16px; text-align: left; font-size: 12px; font-weight: 600; color: var(--gray-400); }
+  td { padding: 10px 16px; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.05); }
+  tr:hover td { background: rgba(59,130,246,0.04); }
+
+  .badge {
+    padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600;
+  }
+  .badge-green { background: rgba(16,185,129,0.15); color: #34d399; }
+  .badge-yellow { background: rgba(245,158,11,0.15); color: #fcd34d; }
+  .badge-blue { background: #3b82f626; color: var(--accent-light); }
+
+  .dash-actions { display: flex; gap: 1rem; margin-bottom: 2rem; }
+  .btn-secondary {
+    padding: 10px 22px; border-radius: 10px; font-size: 13px; font-weight: 600;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    color: var(--white); cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary:hover { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.3); }
+
+  /* ========== DASHBOARD MAHASISWA ========== */
+  .login-wrap {
+    min-height: 80vh; display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .login-card {
+    background: linear-gradient(160deg, rgba(26,58,110,0.6), rgba(15,32,66,0.9));
+    border: 1px solid var(--card-border); border-radius: 20px;
+    padding: 2.5rem; width: 100%; max-width: 420px;
+  }
+  .login-card h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .login-card p { color: var(--gray-400); font-size: 13px; margin-bottom: 1.8rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-400); margin-bottom: 6px; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 11px 14px; border-radius: 10px;
+    background: rgba(255,255,255,0.06); border: 1px solid var(--card-border);
+    color: white; font-size: 14px; font-family: var(--font-body);
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+  .form-group input::placeholder { color: var(--gray-400); }
+
+  .student-profile {
+    background: linear-gradient(135deg, rgba(26,58,110,0.6), rgba(6,182,212,0.1));
+    border: 1px solid var(--card-border); border-radius: 18px;
+    padding: 1.8rem; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .profile-avatar {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800; flex-shrink: 0;
+  }
+  .profile-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+  .profile-info p { font-size: 13px; color: var(--gray-400); }
+  .profile-badge {
+    margin-top: 8px; display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 100px;
+    background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.2);
+    font-size: 12px; font-weight: 600; color: #34d399;
+  }
+
+  .student-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
+  .s-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.4rem;
+  }
+  .s-card-label { font-size: 11px; color: var(--gray-400); font-weight: 600; margin-bottom: 0.4rem; }
+  .s-card-val { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--accent-light); }
+  .s-card-sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+  .quota-bar-wrap { margin: 1.5rem 0; }
+  .quota-bar-track { height: 16px; background: rgba(255,255,255,0.08); border-radius: 100px; overflow: hidden; }
+  .quota-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--teal)); }
+
+  .desil-checker {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .desil-checker h3 { font-size: 15px; font-weight: 700; margin-bottom: 0.3rem; }
+  .desil-checker p { font-size: 13px; color: var(--gray-400); margin-bottom: 1.2rem; }
+  .desil-form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .desil-result {
+    margin-top: 1.2rem; padding: 1rem 1.2rem; border-radius: 12px;
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25);
+  }
+  .desil-result.warn { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); }
+  .desil-result p { font-size: 14px; font-weight: 600; color: #34d399; margin-bottom: 0; }
+  .desil-result.warn p { color: #fcd34d; }
+
+  /* ========== SUARA KAMPUS ========== */
+  .tab-nav {
+    display: flex; gap: 4px; border-bottom: 1px solid var(--card-border);
+    padding: 0 2rem; background: rgba(15,32,66,0.5);
+    justify-content: center;
+  }
+  .tab-btn {
+    padding: 14px 20px; font-size: 14px; font-weight: 600;
+    color: var(--gray-400); cursor: pointer; border: none; background: transparent;
+    border-bottom: 3px solid transparent; transition: all 0.2s; margin-bottom: -1px;
+  }
+  .tab-btn.active { color: var(--accent-light); border-bottom-color: var(--accent); }
+  .tab-btn:hover { color: white; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .petition-item {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.5rem; margin-bottom: 1rem; transition: all 0.2s;
+  }
+  .petition-item:hover { border-color: rgba(59,130,246,0.3); }
+  .petition-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .petition-title { font-size: 15px; font-weight: 700; margin-bottom: 0.3rem; }
+  .petition-meta { font-size: 12px; color: var(--gray-400); margin-bottom: 0.8rem; }
+  .petition-progress { margin: 0.8rem 0; }
+  .progress-track { height: 8px; background: rgba(255,255,255,0.08); border-radius: 100px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--teal)); }
+  .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+
+  .report-form {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 1.5rem;
+  }
+  .report-form h3 { font-size: 15px; font-weight: 700; margin-bottom: 0.5rem; }
+  .report-form p { font-size: 13px; color: var(--gray-400); margin-bottom: 1.2rem; }
+  .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  textarea {
+    width: 100%; padding: 11px 14px; border-radius: 10px;
+    background: rgba(255,255,255,0.06); border: 1px solid var(--card-border);
+    color: white; font-size: 14px; font-family: var(--font-body);
+    outline: none; resize: vertical; min-height: 80px;
+    transition: border-color 0.2s;
+  }
+  textarea:focus { border-color: var(--accent); }
+  textarea::placeholder { color: var(--gray-400); }
+
+  .upload-area {
+    border: 2px dashed var(--card-border); border-radius: 12px;
+    padding: 1.5rem; text-align: center; cursor: pointer;
+    transition: all 0.2s; margin: 1rem 0;
+  }
+  .upload-area:hover { border-color: var(--accent); background: rgba(59,130,246,0.05); }
+  .upload-area p { font-size: 13px; color: var(--gray-400); }
+
+  .discussion-thread {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.2rem; margin-bottom: 0.8rem;
+  }
+  .thread-title { font-size: 14px; font-weight: 700; margin-bottom: 0.3rem; }
+  .thread-meta { font-size: 12px; color: var(--gray-400); display: flex; gap: 1rem; }
+
+  .poll-item {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.5rem; margin-bottom: 1rem;
+  }
+  .poll-q { font-size: 15px; font-weight: 700; margin-bottom: 1rem; }
+  .poll-options { display: flex; flex-direction: column; gap: 8px; }
+  .poll-opt { position: relative; padding: 10px 14px; border-radius: 10px; cursor: pointer; overflow: hidden; }
+  .poll-bg { position: absolute; inset: 0; border-radius: 10px; }
+  .poll-bg.a { background: rgba(59,130,246,0.15); }
+  .poll-bg.b { background: rgba(6,182,212,0.1); }
+  .poll-bg.c { background: rgba(16,185,129,0.1); }
+  .poll-bg.d { background: rgba(245,158,11,0.1); }
+  .poll-opt-text { position: relative; font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; }
+
+  /* ========== FORUM KEBIJAKAN ========== */
+  .forum-session {
+    background: linear-gradient(135deg, rgba(26,58,110,0.6), rgba(6,182,212,0.08));
+    border: 1px solid rgba(59,130,246,0.25); border-radius: 18px;
+    padding: 2rem; margin-bottom: 1.5rem;
+  }
+  .session-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; }
+  .session-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 100px;
+    background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.2);
+    font-size: 12px; font-weight: 600; color: #34d399; margin-bottom: 0.5rem;
+  }
+  .session-badge::before { content: '●'; font-size: 7px; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .session-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .session-detail { font-size: 13px; color: var(--gray-400); }
+  .session-speaker {
+    background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .speaker-ava {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .speaker-name { font-size: 14px; font-weight: 700; }
+  .speaker-role { font-size: 12px; color: var(--gray-400); }
+
+  .questions-list { margin-bottom: 1.5rem; }
+  .q-item {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 0.8rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .q-vote {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    flex-shrink: 0;
+  }
+  .vote-btn {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+    color: var(--accent-light); font-size: 12px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+  }
+  .vote-btn:hover { background: rgba(59,130,246,0.25); }
+  .vote-count { font-size: 13px; font-weight: 700; color: var(--accent-light); }
+  .q-text { font-size: 13px; line-height: 1.6; flex: 1; }
+  .q-asker { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+  .q-badge { 
+    padding: 2px 8px; border-radius: 100px; font-size: 10px; font-weight: 600;
+    background: rgba(245,158,11,0.15); color: #fcd34d; flex-shrink: 0; margin-top: 2px;
+  }
+
+  .archive-item {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.2rem 1.5rem; margin-bottom: 0.8rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .archive-title { font-size: 14px; font-weight: 700; }
+  .archive-date { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+  /* ========== NAV DROPDOWN ========== */
+  .nav-item { position: relative; display: flex; align-items: center; }
+  .nav-item > a { display: flex; align-items: center; gap: 4px; }
+  .dropdown-caret { font-size: 9px; opacity: 0.7; transition: transform 0.2s; }
+  .nav-item:hover .dropdown-caret, .nav-item:focus-within .dropdown-caret { transform: rotate(180deg); }
+  .dropdown-menu {
+    position: absolute; top: calc(100% + 10px); left: 0;
+    background: var(--navy-mid); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 6px; min-width: 200px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.2s; z-index: 200;
+  }
+  .nav-item:hover .dropdown-menu, .nav-item:focus-within .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .dropdown-menu a {
+    display: block; padding: 9px 12px; border-radius: 8px;
+    font-size: 13px; font-weight: 600; color: var(--gray-200);
+  }
+  .dropdown-menu a:hover { background: rgba(59,130,246,0.15); color: white; }
+
+  /* ========== INSIGHT PENDIDIKAN ========== */
+  .insight-intro {
+    background: linear-gradient(135deg, rgba(6,182,212,0.12), rgba(59,130,246,0.08));
+    border: 1px solid rgba(6,182,212,0.25); border-radius: 16px;
+    padding: 1.5rem 1.8rem; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .insight-intro-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .insight-intro-text { font-size: 14px; color: var(--gray-200); line-height: 1.7; }
+  .insight-intro-text strong { color: var(--teal); }
+
+  .insight-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .insight-kpi {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.2rem; text-align: center;
+  }
+  .insight-kpi-num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--teal); }
+  .insight-kpi-lbl { font-size: 11px; color: var(--gray-400); margin-top: 4px; line-height: 1.4; }
+  .insight-kpi-trend {
+    font-size: 10px; font-weight: 700; margin-top: 6px;
+    display: inline-block; padding: 2px 8px; border-radius: 100px;
+  }
+  .insight-kpi-trend.up { background: rgba(16,185,129,0.15); color: #34d399; }
+  .insight-kpi-trend.down { background: rgba(239,68,68,0.15); color: #f87171; }
+
+  .kajian-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.4rem; margin-bottom: 1rem;
+  }
+  .kajian-top { display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .kajian-tag {
+    padding: 3px 10px; border-radius: 100px; font-size: 10px; font-weight: 700;
+    background: rgba(59,130,246,0.15); color: var(--accent-light);
+  }
+  .kajian-date { font-size: 11px; color: var(--gray-400); }
+  .kajian-title { font-size: 15px; font-weight: 700; margin-bottom: 0.4rem; }
+  .kajian-desc { font-size: 13px; color: var(--gray-400); line-height: 1.7; margin-bottom: 0.8rem; }
+
+  .dampak-item {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 14px; padding: 1.3rem 1.5rem; margin-bottom: 1rem;
+  }
+  .dampak-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.8rem; }
+  .dampak-title { font-size: 14px; font-weight: 700; }
+  .dampak-sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+  .dampak-value { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--teal); flex-shrink: 0; white-space: nowrap; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: #060e1a;
+    border-top: 1px solid var(--card-border);
+    padding: 3rem 2rem 1.5rem;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 2rem; margin-bottom: 2.5rem; }
+  .footer-brand p { font-size: 13px; color: var(--gray-400); line-height: 1.7; margin: 0.8rem 0; }
+  .social-links { display: flex; gap: 8px; margin-top: 0.8rem; }
+  .social-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+  }
+  /* Membuat tautan kontak tersusun rapi ke bawah */
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Jarak antar baris kontak */
+}
+
+/* Mengatur tombol agar ikon dan teks sejajar horizontal */
+.footer-contact .social-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Jarak antara ikon dan teks */
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  width: fit-content; /* Kotak hover hanya seukuran teks, tidak memanjang penuh */
+}
+
+/* Menghilangkan margin bawaan agar tidak merusak posisi */
+.footer-contact .btn-text {
+  font-size: 13px;
+  color: var(--gray-400);
+}
+
+/* Efek Hover yang rapi */
+.footer-contact .social-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.footer-contact .social-btn:hover .btn-text {
+  color: var(--white);
+}
+  .social-btn:hover { background: rgba(59,130,246,0.2); }
+  .footer-col h4 { font-size: 13px; font-weight: 700; margin-bottom: 1rem; color: var(--white); }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 8px; }
+  .footer-col ul li a { font-size: 13px; color: var(--gray-400); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--accent-light); }
+  .footer-contact p { font-size: 13px; color: var(--gray-400); margin-bottom: 6px; }
+  .footer-divider { border: none; border-top: 1px solid var(--card-border); margin-bottom: 1.2rem; }
+  .footer-bottom { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .footer-copy { font-size: 12px; color: var(--gray-600); }
+  .footer-disclaimer {
+    font-size: 11px; color: var(--gray-600); max-width: 580px; line-height: 1.5;
+  }
+  /* Tambahkan kode baru ini di bawahnya */
+.social-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Menjaga proporsi gambar agar tidak gepeng */
+}
+
+  /* ========== NOTIFICATION ========== */
+  .notif-panel {
+    position: fixed; top: 70px; right: 1rem; z-index: 200;
+    background: rgba(10, 22, 40, 0.97); border: 1px solid var(--card-border);
+    border-radius: 16px; width: 300px; padding: 1.2rem;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    display: none;
+  }
+  .notif-panel.show { display: block; animation: fadeIn 0.2s ease; }
+  .notif-item { padding: 10px 0; border-bottom: 1px solid var(--card-border); }
+  .notif-item:last-child { border-bottom: none; }
+  .notif-title { font-size: 13px; font-weight: 600; }
+  .notif-time { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+  /* ========== HIGHLIGHT SPOTLIGHT ========== */
+  .spotlight-section {
+    background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(6,182,212,0.05));
+    border: 1px solid rgba(59,130,246,0.15); border-radius: 16px;
+    padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .spotlight-label {
+    font-size: 11px; font-weight: 700; color: var(--teal);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2.5rem; }
+    .hero-inner { flex-direction: column; }
+    .hero-visual { display: none; }
+    .why-grid, .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .budget-cards, .charts-row, .student-grid { grid-template-columns: 1fr; }
+    .insight-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    nav { display: none; }
+    .desil-form, .form-row { grid-template-columns: 1fr; }
+    .about-inner { flex-direction: column; }
+    .testi-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .why-grid, .features-grid { grid-template-columns: 1fr; }
+    .insight-kpi-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+    .map-container {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    /* Mencegah scrollbar muncul */
+    overflow: hidden; 
+}
+
+.map-container img {
+    /* Memastikan gambar selalu mengikuti lebar container */
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.map-container svg {
+    /* SVG mengikuti ukuran gambar di bawahnya */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Agar klik bisa tembus ke elemen di bawah jika perlu */
+}
+
+.map-container svg circle {
+    /* Efek halus saat titik muncul */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    pointer-events: auto; /* Agar titik bisa diklik */
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <div class="logo-mark">
+      <img src="image/Factor (2).png" alt="Logo Factor">
+    </div>
+    <div class="logo-text">
+      <span class="brand">EduWatch</span>
+      <span class="tagline">Kawal Dana, Cerdaskan Bangsa</span>
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="active" data-page="home" onclick="showPage('home')">Homepage</a>
+    <a href="#" data-page="dashboard" onclick="showPage('dashboard')">Dashboard Utama</a>
+    <a href="#" data-page="mahasiswa" onclick="showPage('mahasiswa')">Dashboard Mahasiswa</a>
+    <a href="#" data-page="suara" onclick="showPage('suara')">Suara Didik</a>
+    <a href="#" data-page="forum" onclick="showPage('forum')">Forum Kebijakan</a>
+    <div class="nav-item">
+      <a href="#" data-page="insight" onclick="showPage('insight')">Insight Pendidikan <span class="dropdown-caret">▾</span></a>
+      <div class="dropdown-menu">
+        <a href="#" onclick="showPage('insight','tab-data')">📊 Data Pendidikan</a>
+        <a href="#" onclick="showPage('insight','tab-analisis')">🧭 Analisis Kebijakan</a>
+        <a href="#" onclick="showPage('insight','tab-dampak')">🌱 Dampak Program</a>
+      </div>
+    </div>
+  </nav>
+  <div class="header-right">
+    <div class="btn-notif" onclick="toggleNotif()">
+      🔔
+      <span class="notif-dot"></span>
+    </div>
+    <button class="btn-login" onclick="showPage('mahasiswa')">Masuk / Login</button>
+  </div>
+</header>
+
+<!-- NOTIFICATION PANEL -->
+<div class="notif-panel" id="notifPanel">
+  <div style="font-size:13px;font-weight:700;margin-bottom:10px">Notifikasi</div>
+  <div class="notif-item">
+    <div class="notif-title">Data anggaran MBG diperbarui</div>
+    <div class="notif-time">2 jam yang lalu</div>
+  </div>
+  <div class="notif-item">
+    <div class="notif-title">Sesi Forum bersama Mendiktisaintek – 2 hari lagi</div>
+    <div class="notif-time">1 hari yang lalu</div>
+  </div>
+  <div class="notif-item">
+    <div class="notif-title">Laporan kamu sudah ditindaklanjuti</div>
+    <div class="notif-time">3 hari yang lalu</div>
+  </div>
+</div>
+
+<!-- ==================== PAGE: HOMEPAGE ==================== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">Platform Pengawasan Dana Pendidikan Indonesia</div>
+        <h1>EduWatch</h1>
+        <div class="hero-sub">Kawal Dana, Cerdaskan Bangsa</div>
+        <p>"Pantau alokasi dana pendidikan, laporkan ketidaksesuaian, dan kawal kebijakan secara terbuka bersama masyarakat."</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('dashboard')">Mulai Awasi</button>
+          <button class="btn-outline" onclick="showPage('suara')">Buat Laporan</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-emblem"><img src="image/Factor (2).png" alt=""></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY SECTION -->
+  <div class="why-section">
+    <div class="section">
+      <div class="section-title">Mengapa EduWatch?</div>
+      <div class="section-subtitle">Tiga pilar utama yang menjadi fondasi gerakan pengawasan pendidikan bersama</div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🔍</div>
+          <h3>Transparansi</h3>
+          <p>Data anggaran pendidikan disajikan secara terbuka, real-time, dan dapat diakses siapa saja tanpa hambatan birokrasi.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🤝</div>
+          <h3>Partisipasi</h3>
+          <p>Mahasiswa dan masyarakat bisa ikut mengawal, melaporkan, dan berdiskusi tentang kebijakan pendidikan secara langsung.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">⚖️</div>
+          <h3>Akuntabilitas</h3>
+          <p>Setiap rupiah dana pendidikan dapat ditelusuri dan dipertanggungjawabkan kepada publik melalui mekanisme yang terstruktur.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES SECTION -->
+  <div class="section">
+    <div class="section-title">Fitur Unggulan</div>
+    <div class="section-subtitle">Empat fitur utama untuk mengawal dana pendidikan Indonesia secara menyeluruh</div>
+    <div class="features-grid">
+      <div class="feat-card" onclick="showPage('dashboard')">
+        <div class="feat-icon"></div>
+        <h3>Dasbor Anggaran Terbuka</h3>
+        <p>Pantau alokasi MBG dan KIP Kuliah secara real-time dengan visualisasi data yang mudah dipahami.</p>
+        <button class="btn-explore">Jelajahi</button>
+      </div>
+      <div class="feat-card" onclick="showPage('mahasiswa')">
+        <div class="feat-icon"></div>
+        <h3>Pelacak Kuota</h3>
+        <p>Cek sisa kuota KIP Kuliah di kampusmu, bandingkan dengan kampus sekitar, dan pantau status pengajuanmu.</p>
+        <button class="btn-explore">Jelajahi</button>
+      </div>
+      <div class="feat-card" onclick="showPage('suara')">
+        <div class="feat-icon"></div>
+          <h3>Suara Didik</h3>
+          <p>Tanda tangani petisi, laporkan ketidaksesuaian, dan berpartisipasi dalam polling isu pendidikan terkini.</p>
+        <button class="btn-explore">Jelajahi</button>
+      </div>
+      <div class="feat-card" onclick="showPage('forum')">
+        <div class="feat-icon"></div>
+        <h3>Forum Kebijakan</h3>
+        <p>Dialog langsung dengan pemangku kebijakan, ajukan pertanyaan, dan ikuti sesi diskusi terjadwal.</p>
+        <button class="btn-explore">Jelajahi</button>
+      </div>
+      <div class="feat-card" onclick="showPage('insight')">
+        <div class="feat-icon"></div>
+        <h3>Insight Pendidikan</h3>
+        <p>Bangun kebiasaan belajar sepanjang hayat: pahami data, kaji kebijakan, dan ukur dampak program pendidikan.</p>
+        <button class="btn-explore">Jelajahi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT SECTION -->
+  <div class="about-section">
+    <div class="section">
+      <div class="about-inner">
+        <div class="about-text">
+          <h2>Siapa di Balik EduWatch?</h2>
+          <p>EduWatch dikelola oleh <strong>Dewan Pengawas Multi-Pihak</strong> yang terdiri dari para pemangku kepentingan pendidikan yang beragam dan independen. Tidak ada konflik kepentingan – hanya komitmen terhadap transparansi.</p>
+          <p>Kami percaya bahwa pengawasan yang efektif membutuhkan keberagaman perspektif. Itulah mengapa dewan kami mencakup representasi dari berbagai kalangan:</p>
+          <div class="member-list">
+            <span class="member-tag">🎓 Akademisi</span>
+            <span class="member-tag">👨‍🎓 Mahasiswa</span>
+            <span class="member-tag">🏢 CSO & NGO</span>
+            <span class="member-tag">🔎 Auditor Independen</span>
+            <span class="member-tag">📰 Jurnalis</span>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="about-stats">
+            <div class="stat-box">
+              <div class="stat-num">47K+</div>
+              <div class="stat-lbl">Pengguna Aktif</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">312</div>
+              <div class="stat-lbl">Laporan Ditindaklanjuti</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">89</div>
+              <div class="stat-lbl">Perguruan Tinggi</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">24</div>
+              <div class="stat-lbl">Sesi Forum Selesai</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section">
+    <div class="section-title">Yang Mereka Katakan</div>
+    <div class="section-subtitle">Suara nyata dari mahasiswa yang sudah menggunakan EduWatch</div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote">"EduWatch membantu saya memahami mengapa kuota KIP Kuliah di kampus saya berkurang. Akhirnya bisa saya laporkan dan ditindaklanjuti!"</div>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Rizky Pratama</div>
+            <div class="testi-univ">Universitas Gadjah Mada</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"Dashboard-nya sangat informatif. Saya jadi tahu perbandingan anggaran MBG dan KIP Kuliah yang selama ini tidak pernah dibahas secara terbuka."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sinta Maharani</div>
+            <div class="testi-univ">Universitas Brawijaya</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"Forum Kebijakannya luar biasa. Saya bisa langsung mengajukan pertanyaan ke Mendiktisaintek dan mendapat jawaban resmi secara terbuka."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Ahmad Fauzi</div>
+            <div class="testi-univ">Institut Teknologi Bandung</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-inner">
+      <h2>Bergabunglah. Awasi Dana Pendidikan Kita. Wujudkan Indonesia Emas 2045.</h2>
+      <p>Setiap suara mahasiswa Indonesia penting. Bersama, kita wujudkan pendidikan yang adil, transparan, dan berkualitas.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-primary" onclick="showPage('mahasiswa')">Mulai Sekarang</button>
+        <button class="btn-outline" onclick="showPage('dashboard')">Lihat Data</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div class="logo-mark" style="width:32px;height:32px;font-size:13px"><img src="image/Factor (2).png" alt=""></div>
+            <span style="font-family:var(--font-display);font-weight:800;font-size:15px">EduWatch</span>
+          </div>
+          <p>Platform pengawasan dana pendidikan Indonesia yang independen, transparan, dan partisipatif.</p>
+          <div class="social-links">
+            <a class="social-btn" title="Instagram"><img src="image/instagram2.png" alt="" style="size: 2px;"></a>
+            <a class="social-btn" title="Twitter/X"><img src="image/twitter.png" alt=""></a>
+            <a class="social-btn" title="Email"><img src="image/email.png" alt=""></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Menu</h4>
+          <ul>
+            <li><a onclick="showPage('home')">Homepage</a></li>
+            <li><a onclick="showPage('dashboard')">Dashboard Utama</a></li>
+            <li><a onclick="showPage('mahasiswa')">Dashboard Mahasiswa</a></li>
+            <li><a onclick="showPage('suara')">Suara Didik</a></li>
+            <li><a onclick="showPage('forum')">Forum Kebijakan</a></li>
+            <li><a onclick="showPage('insight')">Insight Pendidikan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tentang</h4>
+          <ul>
+            <li><a href="#">Tentang Kami</a></li>
+            <li><a href="#">Dewan Pengawas</a></li>
+            <li><a href="#">Kebijakan Privasi</a></li>
+            <li><a href="#">Syarat Penggunaan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-contact">
+          <h4>Kontak Kami</h4>
+          <div class="contact-links">
+            <a href="mailto:hello@eduwatch.id" class="social-btn">
+              <img src="image/email.png" alt="">
+              <span class="btn-text">hello@eduwatch.id</span>
+            </a>
+            
+            <a href="https://instagram.com/eduwatchid" target="_blank" class="social-btn">
+              <img src="image/instagram2.png" alt="">
+              <span class="btn-text">@eduwatchid</span>
+            </a>
+            
+            <a href="https://x.com/eduwatchid" target="_blank" class="social-btn">
+              <img src="image/twitter.png" alt="">
+              <span class="btn-text">@eduwatchid</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 EduWatch. Semua hak dilindungi.</div>
+        <div class="footer-disclaimer">EduWatch dikelola oleh Dewan Pengawas Multi-Pihak dan didanai sepenuhnya oleh hibah publik serta donasi. Platform ini independen dari pemerintah dan tidak menggunakan dana APBN.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== PAGE: DASHBOARD UTAMA ==================== -->
+<div class="page" id="page-dashboard">
+  <div class="dash-header">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="dash-title">Dasbor Anggaran Terbuka</div>
+      <div class="dash-sub">Data real-time alokasi MBG dan KIP Kuliah, langsung dari sumber resmi</div>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <!-- BUDGET CARDS -->
+    <div class="budget-cards">
+      <div class="budget-card mbg">
+        <div class="budget-label">Program Makan Bergizi Gratis</div>
+        <div class="budget-tag">MBG 2025</div>
+        <div class="budget-amount">Rp 71 Triliun</div>
+        <div class="budget-year">Anggaran Tahun 2025</div>
+        <div class="budget-update">Diperbarui: 1 Juni 2025 · Sumber: BGN</div>
+      </div>
+      <div class="budget-card kip">
+        <div class="budget-label">Kartu Indonesia Pintar Kuliah</div>
+        <div class="budget-tag">KIP Kuliah 2025</div>
+        <div class="budget-amount">Rp 14,68 Triliun</div>
+        <div class="budget-year">Anggaran Tahun 2025</div>
+        <div class="budget-update">Diperbarui: 1 Juni 2025 · Sumber: Kemendiktisaintek</div>
+      </div>
+    </div>
+
+    <!-- ALERT -->
+    <div class="alert-box">
+      <div class="alert-text">
+        <strong>Tahukah kamu?</strong> Total dana KIP Kuliah <em>setahun penuh</em> setara dengan biaya MBG hanya selama <strong>±73 hari</strong>. Artinya, dalam satu tahun, MBG menerima anggaran ~4,8× lebih besar dari KIP Kuliah.
+      </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Perbandingan Anggaran (dalam Triliun Rupiah)</div>
+        <div class="bar-chart">
+          <div class="bar-item">
+            <div class="bar-label"><span>MBG 2025</span><span style="color:var(--accent-light)">Rp 71T</span></div>
+            <div class="bar-track"><div class="bar-fill mbg" style="width:100%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span>KIP Kuliah 2025</span><span style="color:var(--teal)">Rp 14,68T</span></div>
+            <div class="bar-track"><div class="bar-fill kip" style="width:20.7%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span>MBG 2024 (realisasi)</span><span style="color:var(--accent-light)">Rp 48T</span></div>
+            <div class="bar-track"><div class="bar-fill mbg" style="width:67.6%;opacity:0.6"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label"><span>KIP Kuliah 2024</span><span style="color:var(--teal)">Rp 13,9T</span></div>
+            <div class="bar-track"><div class="bar-fill kip" style="width:19.6%;opacity:0.6"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Proporsi Anggaran 2025</div>
+        <div class="pie-visual">
+          <div class="pie-ring"></div>
+          <div class="pie-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div><span>MBG: 82.9% (Rp 71T)</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div><span>KIP Kuliah: 17.1% (Rp 14,68T)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY TABLE -->
+    <div class="table-box">
+      <div class="table-head">
+        <h3>Riwayat Perubahan Anggaran</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Program</th>
+            <th>Anggaran Sebelumnya</th>
+            <th>Anggaran Baru</th>
+            <th>Sumber</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1 Jun 2025</td>
+            <td>MBG</td>
+            <td>Rp 68T</td>
+            <td>Rp 71T</td>
+            <td>BGN</td>
+            <td><span class="badge badge-green">✓ Diverifikasi</span></td>
+          </tr>
+          <tr>
+            <td>15 Apr 2025</td>
+            <td>KIP Kuliah</td>
+            <td>Rp 14,2T</td>
+            <td>Rp 14,68T</td>
+            <td>Kemendiktisaintek</td>
+            <td><span class="badge badge-green">✓ Diverifikasi</span></td>
+          </tr>
+          <tr>
+            <td>1 Feb 2025</td>
+            <td>MBG</td>
+            <td>Rp 71T</td>
+            <td>Rp 68T</td>
+            <td>APBN Perubahan</td>
+            <td><span class="badge badge-yellow">Ditinjau</span></td>
+          </tr>
+          <tr>
+            <td>10 Jan 2025</td>
+            <td>KIP Kuliah</td>
+            <td>Rp 13,9T</td>
+            <td>Rp 14,2T</td>
+            <td>Kemendiktisaintek</td>
+            <td><span class="badge badge-green">Diverifikasi</span></td>
+          </tr>
+          <tr>
+            <td>1 Jan 2025</td>
+            <td>MBG</td>
+            <td>(Program Baru)</td>
+            <td>Rp 71T</td>
+            <td>APBN 2025</td>
+            <td><span class="badge badge-blue">Historis</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="font-size:12px;color:var(--gray-400);text-align:right;margin-top:-0.5rem">
+      Data diperbarui setiap bulan dari Kemendiktisaintek dan BGN. Terakhir diperbarui: 1 Juni 2025.
+    </div>
+  </div>
+  <footer style="margin-top:3rem">
+    <div class="footer-inner">
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 EduWatch</div>
+        <div class="footer-disclaimer">EduWatch dikelola oleh Dewan Pengawas Multi-Pihak dan didanai sepenuhnya oleh hibah publik serta donasi.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== PAGE: DASHBOARD MAHASISWA ==================== -->
+<div class="page" id="page-mahasiswa">
+  <!-- LOGIN FORM -->
+  <div id="loginSection">
+    <div class="login-wrap">
+      <div class="login-card">
+        <h2>Login Mahasiswa</h2>
+        <p>Masuk menggunakan NIM atau NISN kamu untuk mengakses dasbor personal KIP Kuliah.</p>
+        <div class="form-group">
+          <label>NIM / NISN</label>
+          <input type="text" placeholder="Masukkan NIM atau NISN">
+        </div>
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" placeholder="Sesuai KTP / Ijazah">
+        </div>
+        <div class="form-group">
+          <label>Perguruan Tinggi</label>
+          <select>
+            <option>Pilih perguruan tinggi...</option>
+            <option>Universitas Gadjah Mada</option>
+            <option>Institut Teknologi Bandung</option>
+            <option>Universitas Indonesia</option>
+            <option>Universitas Brawijaya</option>
+            <option>Universitas Diponegoro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Kata sandi akun EduWatch">
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem" onclick="showStudentDash()">
+          Masuk ke Dasbor →
+        </button>
+        <div style="text-align:center;margin-top:1rem;font-size:12px;color:var(--gray-400)">
+          Belum punya akun? <a href="#" style="color:var(--accent-light)">Daftar sekarang</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDENT DASHBOARD (shown after login) -->
+  <div id="studentDash" style="display:none">
+    <div class="dash-header">
+      <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="dash-title">Dasbor Mahasiswa</div>
+          <div class="dash-sub">Data KIP Kuliah personalmu, real-time dan terverifikasi</div>
+        </div>
+        <button class="btn-secondary" onclick="document.getElementById('loginSection').style.display='flex';document.getElementById('studentDash').style.display='none'">
+          Keluar
+        </button>
+      </div>
+    </div>
+
+    <div class="dash-body">
+      <!-- PROFILE -->
+      <div class="student-profile">
+        <div class="profile-avatar">K</div>
+        <div class="profile-info">
+          <h3>Kevin Sanjaya</h3>
+          <p>NIM: F0325xxx - Universitas Sebelas Maret</p>
+          <p>Program Studi: Akuntansi, Semester 2</p>
+          <div class="profile-badge">✅ Penerima KIP Kuliah Aktif</div>
+        </div>
+      </div>
+
+      <!-- QUICK STATS -->
+      <div class="student-grid">
+        <div class="s-card">
+          <div class="s-card-label">Total Kuota KIPK Kampusku</div>
+          <div class="s-card-val">2.450</div>
+          <div class="s-card-sub">Tahun akademik 2025/2026</div>
+        </div>
+        <div class="s-card">
+          <div class="s-card-label">Sisa Kuota Tersedia</div>
+          <div class="s-card-val" style="color:#34d399">312</div>
+          <div class="s-card-sub">Per 1 Juni 2025</div>
+        </div>
+        <div class="s-card">
+          <div class="s-card-label">Status Pengajuanmu</div>
+          <div class="s-card-val" style="color:var(--teal);font-size:1.1rem">✅ Diterima</div>
+          <div class="s-card-sub">Tahap verifikasi selesai</div>
+        </div>
+      </div>
+
+      <!-- QUOTA BAR -->
+      <div class="chart-box" style="margin-bottom:1.5rem">
+        <div class="chart-title">Penggunaan Kuota KIPK–UNS</div>
+        <div class="quota-bar-wrap">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-400);margin-bottom:6px">
+            <span>Terpakai: 2.138 (87,3%)</span>
+            <span>Sisa: 312 (12,7%)</span>
+          </div>
+          <div class="quota-bar-track">
+            <div class="quota-bar-fill" style="width:87.3%"></div>
+          </div>
+        </div>
+        <div style="margin-top:1.2rem">
+          <div style="font-size:13px;font-weight:700;margin-bottom:0.8rem">Perbandingan Kuota Kampus Sekitar:</div>
+          <div class="bar-chart">
+            <div class="bar-item">
+              <div class="bar-label"><span>Universitas Sebelas Maret</span><span>2.450 kuota</span></div>
+              <div class="bar-track"><div class="bar-fill mbg" style="width:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Universitas Gajah Mada</span><span>1.900 kuota</span></div>
+              <div class="bar-track"><div class="bar-fill kip" style="width:75%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Universitas Negeri Yogyakarta</span><span>1616 kuota</span></div>
+              <div class="bar-track"><div class="bar-fill mbg" style="width:66%;opacity:0.7"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>UPN Veteran Yogyakarta</span><span>600 kuota</span></div>
+              <div class="bar-track"><div class="bar-fill kip" style="width:25%;opacity:0.7"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESIL CHECKER -->
+      <div class="desil-checker">
+        <h3>Cek Status Desil & Kelayakan UTBK</h3>
+        <p>Masukkan data singkat untuk mengetahui status desilmu dan apakah kamu dikenakan biaya UTBK</p>
+        <div class="desil-form">
+          <div class="form-group" style="margin:0">
+            <label>Penghasilan Orang Tua/Bulan</label>
+            <select><option>Di bawah Rp 500.000</option><option>Rp 500.000 – 1.5 juta</option><option>Rp 1.5 – 3 juta</option><option>Di atas Rp 3 juta</option></select>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label>Jumlah Tanggungan Keluarga</label>
+            <select><option>1–2 orang</option><option>3–4 orang</option><option>5–6 orang</option><option>7+ orang</option></select>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label>Kepemilikan Aset</label>
+            <select><option>Tidak punya</option><option>Punya, sederhana</option><option>Punya, layak</option><option>Punya, mewah</option></select>
+          </div>
+        </div>
+        <button class="btn-primary" style="margin-top:1rem" onclick="showDesilResult()">Cek Status Desil →</button>
+        <div class="desil-result" id="desilResult" style="display:none">
+          <p>✅ Status Desil 1–2: <strong>Kamu berhak atas pembebasan biaya pendaftaran UTBK</strong></p>
+          <p style="color:var(--gray-200);font-size:13px;font-weight:400;margin-top:4px">Tunjukkan bukti ini saat pendaftaran. Nomor referensi: EDW-2025-88421</p>
+        </div>
+      </div>
+
+      <button class="btn-outline" style="margin-bottom:2rem" onclick="showPage('suara')">
+        ⚠️ Laporkan Jika Data Tidak Sesuai
+      </button>
+    </div>
+  </div>
+
+  <footer style="margin-top:1rem">
+    <div class="footer-inner">
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 EduWatch</div>
+        <div class="footer-disclaimer">Data mahasiswa dienkripsi dan tidak dibagikan ke pihak ketiga.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== PAGE: SUARA KAMPUS ==================== -->
+<div class="page" id="page-suara">
+  <div class="dash-header">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="dash-title"></div>
+      <h3 style="font-size: 30px;">Suara Didik</h3>
+      <div class="dash-sub">Ruang partisipasi mahasiswa untuk mengawal KIP Kuliah</div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(this,'tab-petisi')">Petisi</button>
+    <button class="tab-btn" onclick="switchTab(this,'tab-laporan')">Laporan</button>
+    <button class="tab-btn" onclick="switchTab(this,'tab-diskusi')">Diskusi</button>
+    <button class="tab-btn" onclick="switchTab(this,'tab-polling')">Jajak Pendapat</button>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto;padding:2rem">
+
+    <!-- SPOTLIGHT -->
+    
+
+    <!-- TAB: PETISI -->
+    <div class="tab-content active" id="tab-petisi">
+      <div class="spotlight-section">
+        <div class="spotlight-label">Sorotan Minggu Ini</div>
+        <div style="font-size:15px;font-weight:700">Petisi "Transparansi Kuota KIPK 2025/2026" meraih 12.847 tanda tangan dalam 72 jam!</div>
+        <div style="font-size:13px;color:var(--gray-400);margin-top:4px">Petisi ini telah diteruskan ke Kemendiktisaintek untuk ditinjau.</div>
+      </div>
+      <div class="petition-item">
+        <div class="petition-top">
+          <div>
+            <div class="petition-title">Transparansi Kuota KIPK 2025/2026 per Perguruan Tinggi</div>
+            <div class="petition-meta">Nasional · Dibuat 28 Mei 2025 · Oleh Forum Mahasiswa KIP Kuliah</div>
+          </div>
+          <button class="btn-primary" style="flex-shrink:0">Tanda Tangani</button>
+        </div>
+        <div class="petition-progress">
+          <div class="progress-track"><div class="progress-fill" style="width:85.6%"></div></div>
+          <div class="progress-label"><span>12.847 tanda tangan</span><span>Target: 15.000</span></div>
+        </div>
+      </div>
+      <div class="petition-item">
+        <div class="petition-top">
+          <div>
+            <div class="petition-title">Tolak Kenaikan Biaya Pendaftaran UTBK bagi Peserta Desil 1-4</div>
+            <div class="petition-meta">Nasional · Dibuat 20 Mei 2025 · Oleh BEM Seluruh Indonesia</div>
+          </div>
+          <button class="btn-primary" style="flex-shrink:0">Tanda Tangani</button>
+        </div>
+        <div class="petition-progress">
+          <div class="progress-track"><div class="progress-fill" style="width:62%"></div></div>
+          <div class="progress-label"><span>6.200 tanda tangan</span><span>Target: 10.000</span></div>
+        </div>
+      </div>
+      <div class="petition-item">
+        <div class="petition-top">
+          <div>
+            <div class="petition-title">Audit Independen Penerima KIP Kuliah yang Tidak Tepat Sasaran</div>
+            <div class="petition-meta">Nasional · Dibuat 10 Mei 2025 · Oleh Koalisi Anti Korupsi Kampus</div>
+          </div>
+          <button class="btn-primary" style="flex-shrink:0">Tanda Tangani</button>
+        </div>
+        <div class="petition-progress">
+          <div class="progress-track"><div class="progress-fill" style="width:47%"></div></div>
+          <div class="progress-label"><span>4.700 tanda tangan</span><span>Target: 10.000</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: LAPORAN -->
+    <div class="tab-content" id="tab-laporan">
+      <div class="report-form">
+        <h3>Formulir Pengaduan Ketidaktepatan Sasaran Bantuan Pendidikan</h3>
+        <p>Laporkan jika kamu mengetahui penerima KIP Kuliah yang tidak memenuhi kriteria, atau sebaliknya — mahasiswa yang berhak tapi tidak mendapat KIPK.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nama Pelapor (opsional)</label>
+            <input type="text" placeholder="Bisa anonim">
+          </div>
+          <div class="form-group">
+            <label>Perguruan Tinggi Terkait</label>
+            <select><option>Pilih kampus...</option><option>UGM</option><option>ITB</option><option>UI</option></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Kategori Laporan</label>
+          <select>
+            <option>Penerima KIPK tidak tepat sasaran</option>
+            <option>Mahasiswa berhak tidak mendapat KIPK</option>
+            <option>Penyalahgunaan dana KIPK</option>
+            <option>Data kuota tidak sesuai</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Deskripsi Laporan</label>
+          <textarea placeholder="Jelaskan kronologi dan fakta yang kamu ketahui secara lengkap..."></textarea>
+        </div>
+        <div class="upload-area">
+          <div style="font-size:1.5rem;margin-bottom:6px">📎</div>
+          <p>Unggah bukti pendukung (foto, dokumen, screenshot)</p>
+          <p style="font-size:11px;margin-top:4px">Maks. 10MB · PDF, JPG, PNG</p>
+        </div>
+        <button class="btn-primary">Kirim Laporan</button>
+      </div>
+
+      <div style="margin-top:2rem">
+        <div style="font-size:14px;font-weight:700;margin-bottom:1rem">Status Laporan Terbaru:</div>
+        <div class="table-box">
+          <table>
+            <thead><tr><th>ID Laporan</th><th>Kategori</th><th>Tanggal</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>RPT-2025-1124</td><td>Tidak tepat sasaran</td><td>28 Mei 2025</td><td><span class="badge badge-yellow">⏳ Ditindaklanjuti</span></td></tr>
+              <tr><td>RPT-2025-0891</td><td>Data kuota tidak sesuai</td><td>15 Mei 2025</td><td><span class="badge badge-green">✅ Diteruskan ke Kementerian</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: DISKUSI -->
+    <div class="tab-content" id="tab-diskusi">
+      <div class="discussion-thread">
+        <div class="thread-title">💬 Kenapa kuota KIPK kampus swasta lebih sedikit dari PTN?</div>
+        <div class="thread-meta"><span>👤 Hendra M.</span><span>🏷️ Kebijakan</span><span>💬 47 balasan</span><span>🕐 2 hari lalu</span></div>
+      </div>
+      <div class="discussion-thread">
+        <div class="thread-title">💬 Pengalaman mengurus pencairan dana KIPK yang telat — share di sini!</div>
+        <div class="thread-meta"><span>👤 Dewi A.</span><span>🏷️ Pengalaman</span><span>💬 83 balasan</span><span>🕐 3 hari lalu</span></div>
+      </div>
+      <div class="discussion-thread">
+        <div class="thread-title">💬 Apakah perubahan sistem desil 2025 benar-benar lebih adil?</div>
+        <div class="thread-meta"><span>👤 Forum Nasional</span><span>🏷️ Debat</span><span>💬 129 balasan</span><span>🕐 5 hari lalu</span></div>
+      </div>
+      <button class="btn-primary" style="margin-top:0.5rem">➕ Mulai Diskusi Baru</button>
+    </div>
+
+    <!-- TAB: POLLING -->
+    <div class="tab-content" id="tab-polling">
+      <div class="poll-item">
+        <div class="poll-q">Apakah besaran dana KIPK saat ini sudah mencukupi kebutuhan hidup mahasiswa?</div>
+        <div class="poll-options">
+          <div class="poll-opt" onclick="votePoll(this)"><div class="poll-bg a"></div><div class="poll-opt-text"><span>✅ Ya, sudah cukup</span><span>23%</span></div></div>
+          <div class="poll-opt" onclick="votePoll(this)"><div class="poll-bg b"></div><div class="poll-opt-text"><span>⚠️ Cukup tapi pas-pasan</span><span>41%</span></div></div>
+          <div class="poll-opt" onclick="votePoll(this)"><div class="poll-bg c"></div><div class="poll-opt-text"><span>❌ Tidak cukup</span><span>36%</span></div></div>
+        </div>
+        <div style="font-size:12px;color:var(--gray-400);margin-top:0.8rem">🗳️ 8.421 suara · Berakhir 10 Juni 2025</div>
+      </div>
+      <div class="poll-item">
+        <div class="poll-q">Setujukah kamu dengan kebijakan MBG yang mengalihkan sebagian anggaran pendidikan?</div>
+        <div class="poll-options">
+          <div class="poll-opt" onclick="votePoll(this)"><div class="poll-bg a"></div><div class="poll-opt-text"><span>✅ Sangat setuju</span><span>18%</span></div></div>
+          <div class="poll-opt" onclick="votePoll(this)"><div class="poll-bg b"></div><div class="poll-opt-text"><span>🤔 Setuju dengan syarat</span><span>29%</span></div></div>
+          <div class="poll-opt" onclick="votePoll(this)"><div class="poll-bg c"></div><div class="poll-opt-text"><span>❌ Tidak setuju</span><span>53%</span></div></div>
+        </div>
+        <div style="font-size:12px;color:var(--gray-400);margin-top:0.8rem">🗳️ 12.887 suara · Berakhir 15 Juni 2025</div>
+      </div>
+    </div>
+
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 EduWatch</div>
+        <div class="footer-disclaimer">EduWatch dikelola oleh Dewan Pengawas Multi-Pihak dan didanai sepenuhnya oleh hibah publik serta donasi.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== PAGE: FORUM KEBIJAKAN ==================== -->
+<div class="page" id="page-forum">
+  <div class="dash-header">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="dash-title">Forum Kebijakan</div>
+      <div class="dash-sub">Dialog langsung antara mahasiswa dan pemangku kebijakan</div>
+    </div>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto;padding:2rem">
+
+    <!-- NOTIF ALERT -->
+    <div class="alert-box" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.25)">
+      <div class="alert-text" style="color:#34d399">
+        <strong>Sesi bersama Mendiktisaintek akan dimulai 2 hari lagi.</strong> Ajukan pertanyaanmu sekarang sebelum pendaftaran ditutup!
+      </div>
+    </div>
+
+    <!-- UPCOMING SESSION -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:1rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;font-size:12px">Sesi Mendatang</div>
+    <div class="forum-session">
+      <div class="session-top">
+        <div>
+          <div class="session-badge">Segera Dimulai</div>
+          <div class="session-title">Dialog Kebijakan KIP Kuliah 2025/2026</div>
+          <div class="session-detail">Rabu, 4 Juni 2025 · 14:00 – 16:00 WIB · Live Streaming + Q&A Interaktif</div>
+        </div>
+        <button class="btn-primary" style="flex-shrink:0">Daftar Hadir</button>
+      </div>
+      <div class="session-speaker">
+        <div class="speaker-ava">🎓</div>
+        <div>
+          <div class="speaker-name">Prof. Brian Yuliarto, S.T., M.Eng., Ph.D.</div>
+          <div class="speaker-role">Menteri Pendidikan Tinggi, Sains, dan Teknologi Republik Indonesia</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;font-size:13px;color:var(--gray-400)">
+        <strong style="color:var(--white)">Tema:</strong> Arah Kebijakan KIP Kuliah 2025 – Efisiensi, Ketepatan Sasaran, dan Masa Depan Beasiswa
+      </div>
+    </div>
+
+    <!-- QUESTION BOX -->
+    <div class="chart-box" style="margin-bottom:1.5rem">
+      <div class="chart-title">Ajukan Pertanyaan untuk Sesi Mendatang</div>
+      <div class="form-group">
+        <label>Pertanyaanmu</label>
+        <textarea placeholder="Tulis pertanyaan substantif yang ingin kamu ajukan kepada pemangku kebijakan..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nama (opsional)</label>
+          <input type="text" placeholder="Boleh anonim">
+        </div>
+        <div class="form-group">
+          <label>Kampus Asal</label>
+          <select><option>Pilih instansi...</option><option>UGM</option><option>ITB</option><option>UI</option></select>
+        </div>
+      </div>
+      <button class="btn-primary">Kirim Pertanyaan</button>
+    </div>
+
+    <!-- QUESTIONS LEADERBOARD -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:1rem">Pertanyaan Terpopuler (Vote terbanyak naik ke atas)</div>
+    <div class="questions-list">
+      <div class="q-item">
+        <div class="q-vote">
+          <button class="vote-btn">▲</button>
+          <div class="vote-count">847</div>
+        </div>
+        <div>
+          <div class="q-text">Mengapa anggaran MBG senilai Rp 71T jauh melampaui KIP Kuliah Rp 14,68T, sementara dampak jangka panjang investasi pendidikan terbukti lebih besar? Adakah rencana rebalancing anggaran?</div>
+          <div class="q-asker">Anonim · UGM Yogyakarta</div>
+        </div>
+        <span class="q-badge">Terpopuler</span>
+      </div>
+      <div class="q-item">
+        <div class="q-vote">
+          <button class="vote-btn">▲</button>
+          <div class="vote-count">612</div>
+        </div>
+        <div>
+          <div class="q-text">Apa langkah konkret pemerintah untuk memastikan penerima KIP Kuliah benar-benar dari keluarga tidak mampu, mengingat masih banyak kasus penerima tidak tepat sasaran?</div>
+          <div class="q-asker">Sarah N. · Universitas Indonesia</div>
+        </div>
+      </div>
+      <div class="q-item">
+        <div class="q-vote">
+          <button class="vote-btn">▲</button>
+          <div class="vote-count">489</div>
+        </div>
+        <div>
+          <div class="q-text">Kapan sistem desil baru akan diimplementasikan secara penuh, dan bagaimana mahasiswa yang sudah telanjur tidak tepat sasaran akan ditangani?</div>
+          <div class="q-asker">Budi K. · ITB Bandung</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHIVE -->
+    <div style="font-size:14px;font-weight:700;margin:2rem 0 1rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;font-size:12px">Arsip Sesi Sebelumnya</div>
+    <div class="archive-item">
+      <div>
+        <div class="archive-title">Dialog KIP Kuliah: Reformasi Sistem Seleksi 2024</div>
+        <div class="archive-date">15 November 2024 · Dirjen Pembelajaran Kemendiktisaintek</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="btn-secondary" style="font-size:12px">Ringkasan</button>
+        <button class="btn-secondary" style="font-size:12px">▶Rekaman</button>
+      </div>
+    </div>
+    <div class="archive-item">
+      <div>
+        <div class="archive-title">Forum Akuntabilitas: Audit Dana Pendidikan 2023</div>
+        <div class="archive-date">20 Agustus 2024 · BPK & Kemenkeu</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="btn-secondary" style="font-size:12px">Ringkasan</button>
+        <button class="btn-secondary" style="font-size:12px">▶Rekaman</button>
+      </div>
+    </div>
+
+    <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:1rem 1.2rem;margin-top:1.5rem;font-size:13px;color:var(--gray-400)">
+      <strong style="color:var(--white)">Tidak ada sesi terjadwal dalam waktu dekat?</strong> Pertanyaanmu tetap akan ditampung dan diteruskan ke pemangku kebijakan terkait.
+    </div>
+  </div>
+
+  <footer style="margin-top:2rem">
+    <div class="footer-inner">
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 EduWatch</div>
+        <div class="footer-disclaimer">EduWatch dikelola oleh Dewan Pengawas Multi-Pihak dan didanai sepenuhnya oleh hibah publik serta donasi.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== PAGE: INSIGHT PENDIDIKAN ==================== -->
+<div class="page" id="page-insight">
+  <div class="dash-header">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="dash-title">Insight Pendidikan</div>
+      <div class="dash-sub">Ruang belajar bersama untuk memahami data, mengkaji kebijakan, dan mengukur dampak pendidikan Indonesia</div>
+    </div>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto;padding:2rem">
+
+    <!-- INTRO / LIFELONG LEARNING NARRATIVE -->
+    <div class="insight-intro">
+      <div class="insight-intro-icon">🌱</div>
+      <div class="insight-intro-text">
+        Belajar tidak berhenti di ruang kelas. <strong>Insight Pendidikan</strong> mengajak kamu terus menelusuri data, mengkaji kebijakan, dan melihat dampak nyata di lapangan — sebagai bagian dari budaya <strong>belajar sepanjang hayat (lifelong learning)</strong> yang ingin kami tumbuhkan bersama masyarakat.
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="tab-data" onclick="switchTab(this,'tab-data')">📊 Data Pendidikan</button>
+      <button class="tab-btn" data-tab="tab-analisis" onclick="switchTab(this,'tab-analisis')">🧭 Analisis Kebijakan</button>
+      <button class="tab-btn" data-tab="tab-dampak" onclick="switchTab(this,'tab-dampak')">🌱 Dampak Program</button>
+    </div>
+
+    <!-- TAB: DATA PENDIDIKAN -->
+    <div class="tab-content active" id="tab-data" style="padding-top:2rem">
+      <div class="insight-kpi-grid">
+        <div class="insight-kpi">
+          <div class="insight-kpi-num">96,1%</div>
+          <div class="insight-kpi-lbl">Angka Partisipasi Kasar SD/Sederajat</div>
+          <span class="insight-kpi-trend up">▲ 0,4%</span>
+        </div>
+        <div class="insight-kpi">
+          <div class="insight-kpi-num">74,3%</div>
+          <div class="insight-kpi-lbl">Angka Partisipasi Kasar Perguruan Tinggi</div>
+          <span class="insight-kpi-trend up">▲ 1,2%</span>
+        </div>
+        <div class="insight-kpi">
+          <div class="insight-kpi-num">96,6%</div>
+          <div class="insight-kpi-lbl">Tingkat Literasi Dewasa (15 th+)</div>
+          <span class="insight-kpi-trend up">▲ 0,3%</span>
+        </div>
+        <div class="insight-kpi">
+          <div class="insight-kpi-num">8,7%</div>
+          <div class="insight-kpi-lbl">Partisipasi Pelatihan/Kursus Non-Formal Dewasa</div>
+          <span class="insight-kpi-trend down">▼ 0,2%</span>
+        </div>
+      </div>
+
+
+      <div class="chart-box" style="margin-bottom:1.5rem; width: 100%; overflow: hidden;">
+        <div class="chart-title" style="margin-bottom: 1rem;">Peta Inklusivitas Pendidikan Antarwilayah (2025)</div>
+        
+        <div class="map-container" style="position: relative; width: 100%; overflow: hidden; border-radius: 8px;">
+          <img src="image/peta-indo.png" alt="Peta Indonesia" style="width: 100%; height: auto; display: block;">
+          
+          <svg viewBox="0 0 920 330" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            <circle cx="72" cy="50" r="7.5" fill="#40b368" stroke="white" stroke-width="1"><title>Aceh: Indeks 80,6</title></circle>
+            <circle cx="105" cy="80.0" r="7.5" fill="#4bb262" stroke="white" stroke-width="1"><title>Sumatera Utara: Indeks 79,5</title></circle>
+            <circle cx="120" cy="138.0" r="7.5" fill="#43b367" stroke="white" stroke-width="1"><title>Sumatera Barat: Indeks 80,3</title></circle>
+            <circle cx="134.6" cy="110.0" r="7.5" fill="#87ab43" stroke="white" stroke-width="1"><title>Riau: Indeks 73,7</title></circle>
+            <circle cx="167.7" cy="152.0" r="7.5" fill="#91aa3f" stroke="white" stroke-width="1"><title>Jambi: Indeks 72,8</title></circle>
+            <circle cx="189.2" cy="186.0" r="7.5" fill="#93aa3e" stroke="white" stroke-width="1"><title>Sumatera Selatan: Indeks 72,6</title></circle>
+            <circle cx="160.3" cy="196.0" r="7.5" fill="#51b15f" stroke="white" stroke-width="1"><title>Bengkulu: Indeks 78,9</title></circle>
+            <circle cx="200.8" cy="218.0" r="7.5" fill="#77ad4c" stroke="white" stroke-width="1"><title>Lampung: Indeks 75,3</title></circle>
+            <circle cx="226.4" cy="174.0" r="7.5" fill="#87ab43" stroke="white" stroke-width="1"><title>Kep. Bangka Belitung: Indeks 73,7</title></circle>
+            <circle cx="185.2" cy="102.0" r="7.5" fill="#12b980" stroke="white" stroke-width="1"><title>Kepulauan Riau: Indeks 85,0</title></circle>
+            <circle cx="230.1" cy="244.0" r="7.5" fill="#33b56f" stroke="white" stroke-width="1"><title>DKI Jakarta: Indeks 81,8</title></circle>
+            <circle cx="260.7" cy="258.0" r="7.5" fill="#7aad4a" stroke="white" stroke-width="1"><title>Jawa Barat: Indeks 75,0</title></circle>
+            <circle cx="310" cy="260.0" r="7.5" fill="#6cae51" stroke="white" stroke-width="1"><title>Jawa Tengah: Indeks 76,3</title></circle>
+            <circle cx="310" cy="275.0" r="7.5" fill="#10b981" stroke="white" stroke-width="1"><title>DI Yogyakarta: Indeks 85,2</title></circle>
+            <circle cx="345.2" cy="270.0" r="7.5" fill="#5fb058" stroke="white" stroke-width="1"><title>Jawa Timur: Indeks 77,6</title></circle>
+            <circle cx="216.4" cy="248.0" r="7.5" fill="#7cac49" stroke="white" stroke-width="1"><title>Banten: Indeks 74,8</title></circle>
+            <circle cx="393.9" cy="288.0" r="7.5" fill="#13b97f" stroke="white" stroke-width="1"><title>Bali: Indeks 84,9</title></circle>
+            <circle cx="435.3" cy="292.0" r="7.5" fill="#5eb059" stroke="white" stroke-width="1"><title>Nusa Tenggara Barat: Indeks 77,7</title></circle>
+            <circle cx="526.5" cy="285.0" r="7.5" fill="#95a93d" stroke="white" stroke-width="1"><title>Nusa Tenggara Timur: Indeks 72,4</title></circle>
+            <circle cx="320" cy="135.0" r="7.5" fill="#c8a322" stroke="white" stroke-width="1"><title>Kalimantan Barat: Indeks 67,5</title></circle>
+            <circle cx="368.6" cy="154.0" r="7.5" fill="#91aa3f" stroke="white" stroke-width="1"><title>Kalimantan Tengah: Indeks 72,8</title></circle>
+            <circle cx="395.8" cy="186.0" r="7.5" fill="#a3a835" stroke="white" stroke-width="1"><title>Kalimantan Selatan: Indeks 71,0</title></circle>
+            <circle cx="419.2" cy="110.0" r="7.5" fill="#33b56f" stroke="white" stroke-width="1"><title>Kalimantan Timur: Indeks 81,8</title></circle>
+            <circle cx="429.0" cy="70.0" r="7.5" fill="#4ab263" stroke="white" stroke-width="1"><title>Kalimantan Utara: Indeks 79,6</title></circle>
+            <circle cx="575.1" cy="112.0" r="7.5" fill="#98a93b" stroke="white" stroke-width="1"><title>Sulawesi Utara: Indeks 72,1</title></circle>
+            <circle cx="491.4" cy="158.0" r="7.5" fill="#7aad4a" stroke="white" stroke-width="1"><title>Sulawesi Tengah: Indeks 75,0</title></circle>
+            <circle cx="485.6" cy="210.0" r="7.5" fill="#71ae4f" stroke="white" stroke-width="1"><title>Sulawesi Selatan: Indeks 75,9</title></circle>
+            <circle cx="515.2" cy="202.0" r="7.5" fill="#74ad4e" stroke="white" stroke-width="1"><title>Sulawesi Tenggara: Indeks 75,6</title></circle>
+            <circle cx="530.9" cy="118.0" r="7.5" fill="#9ba939" stroke="white" stroke-width="1"><title>Gorontalo: Indeks 71,8</title></circle>
+            <circle cx="471.9" cy="170.0" r="7.5" fill="#bca528" stroke="white" stroke-width="1"><title>Sulawesi Barat: Indeks 68,6</title></circle>
+            <circle cx="647.4" cy="190.0" r="7.5" fill="#5db059" stroke="white" stroke-width="1"><title>Maluku: Indeks 77,8</title></circle>
+            <circle cx="631.8" cy="104.0" r="7.5" fill="#72ad4f" stroke="white" stroke-width="1"><title>Maluku Utara: Indeks 75,8</title></circle>
+            <circle cx="727.5" cy="158.0" r="7.5" fill="#a6a734" stroke="white" stroke-width="1"><title>Papua Barat: Indeks 70,8</title></circle>
+            <circle cx="706.9" cy="150.4" r="7.5" fill="#82ac46" stroke="white" stroke-width="1"><title>Papua Barat Daya: Indeks 74,2</title></circle>
+            <circle cx="840.1" cy="190.0" r="7.5" fill="#9fa837" stroke="white" stroke-width="1"><title>Papua: Indeks 71,4</title></circle>
+            <circle cx="850.3" cy="260.0" r="7.5" fill="#f48919" stroke="white" stroke-width="1"><title>Papua Selatan: Indeks 57,9</title></circle>
+            <circle cx="789.8" cy="188.0" r="7.5" fill="#ef4444" stroke="white" stroke-width="1"><title>Papua Tengah: Indeks 41,1</title></circle>
+            <circle cx="856.1" cy="202.0" r="7.5" fill="#f0513c" stroke="white" stroke-width="1"><title>Papua Pegunungan: Indeks 44,3</title></circle>
+          </svg>
+        </div>
+      </div>
+        <div class="map-legend">
+          <span>Kurang Inklusif</span>
+          <div class="map-legend-bar"></div>
+          <span>Sangat Inklusif</span>
+        </div>
+        <div class="map-extremes">
+          <div class="map-extreme-col">
+            <h4 style="color:#f87171">🔴 5 Wilayah Paling Tertinggal</h4>
+            <ul class="map-extreme-list">
+              <li><span>Papua Tengah</span><span class="val" style="color:#f87171">41,1</span></li>
+              <li><span>Papua Pegunungan</span><span class="val" style="color:#f87171">44,3</span></li>
+              <li><span>Papua Selatan</span><span class="val" style="color:#f87171">57,9</span></li>
+              <li><span>Kalimantan Barat</span><span class="val" style="color:#f87171">67,5</span></li>
+              <li><span>Sulawesi Barat</span><span class="val" style="color:#f87171">68,6</span></li>
+            </ul>
+          </div>
+          <div class="map-extreme-col">
+            <h4 style="color:#34d399">🟢 5 Wilayah Paling Inklusif</h4>
+            <ul class="map-extreme-list">
+              <li><span>DI Yogyakarta</span><span class="val" style="color:#34d399">85,2</span></li>
+              <li><span>Kepulauan Riau</span><span class="val" style="color:#34d399">85,0</span></li>
+              <li><span>Bali</span><span class="val" style="color:#34d399">84,9</span></li>
+              <li><span>DKI Jakarta</span><span class="val" style="color:#34d399">81,8</span></li>
+              <li><span>Kalimantan Timur</span><span class="val" style="color:#34d399">81,8</span></li>
+            </ul>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--gray-400);text-align:right;margin-top:0.8rem">
+          Indeks = 0,5 × APM SMA/SMK Sederajat + 0,5 × (100 − ATS usia 16–18 tahun). Sumber: BPS, Statistik Pendidikan 2025 (Susenas Maret 2025).
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-box">
+          <div class="chart-title">Angka Partisipasi Kasar per Jenjang (2025)</div>
+          <div class="bar-chart">
+            <div class="bar-item">
+              <div class="bar-label"><span>SD/Sederajat</span><span style="color:var(--accent-light)">96,1%</span></div>
+              <div class="bar-track"><div class="bar-fill mbg" style="width:96.1%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>SMP/Sederajat</span><span style="color:var(--accent-light)">91,4%</span></div>
+              <div class="bar-track"><div class="bar-fill mbg" style="width:91.4%;opacity:0.85"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>SMA/Sederajat</span><span style="color:var(--teal)">85,8%</span></div>
+              <div class="bar-track"><div class="bar-fill kip" style="width:85.8%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Perguruan Tinggi</span><span style="color:var(--teal)">74,3%</span></div>
+              <div class="bar-track"><div class="bar-fill kip" style="width:74.3%;opacity:0.85"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-title">Sebaran Sumber Belajar Sepanjang Hayat</div>
+          <div class="pie-visual">
+            <div class="pie-ring"></div>
+            <div class="pie-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div><span>Pendidikan Formal: 70%</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div><span>Pelatihan &amp; Kursus: 30%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-box">
+        <div class="table-head">
+          <h3>Tren Indikator Pendidikan 5 Tahun Terakhir</h3>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Tahun</th>
+              <th>Rata-rata Lama Sekolah</th>
+              <th>Harapan Lama Sekolah</th>
+              <th>Angka Melek Huruf</th>
+              <th>Sumber</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>2025</td><td>9,1 tahun</td><td>13,2 tahun</td><td>96,6%</td><td>BPS</td></tr>
+            <tr><td>2024</td><td>9,0 tahun</td><td>13,1 tahun</td><td>96,4%</td><td>BPS</td></tr>
+            <tr><td>2023</td><td>8,9 tahun</td><td>13,0 tahun</td><td>96,1%</td><td>BPS</td></tr>
+            <tr><td>2022</td><td>8,8 tahun</td><td>12,9 tahun</td><td>95,9%</td><td>BPS</td></tr>
+            <tr><td>2021</td><td>8,6 tahun</td><td>12,8 tahun</td><td>95,7%</td><td>BPS</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:12px;color:var(--gray-400);text-align:right;margin-top:-0.5rem">
+        Data ilustratif untuk keperluan demo. Diperbarui berkala dari BPS dan Kemendiktisaintek.
+      </div>
+    </div>
+
+    <!-- TAB: ANALISIS KEBIJAKAN -->
+    <div class="tab-content" id="tab-analisis" style="padding-top:2rem">
+      <div class="kajian-card">
+        <div class="kajian-top">
+          <span class="kajian-tag">Kajian Anggaran</span>
+          <span class="kajian-date">28 Mei 2025</span>
+        </div>
+        <div class="kajian-title">Efektivitas Alokasi KIP Kuliah di Tengah Prioritas Anggaran MBG</div>
+        <div class="kajian-desc">Mengulas bagaimana pergeseran prioritas anggaran nasional memengaruhi daya jangkau KIP Kuliah, serta opsi kebijakan untuk menjaga keseimbangan investasi jangka pendek dan jangka panjang di sektor pendidikan.</div>
+        <button class="btn-secondary" style="font-size:12px">Baca Kajian</button>
+      </div>
+      <div class="kajian-card">
+        <div class="kajian-top">
+          <span class="kajian-tag">Kajian Ketepatan Sasaran</span>
+          <span class="kajian-date">10 Mei 2025</span>
+        </div>
+        <div class="kajian-title">Sistem Desil Baru: Peluang dan Tantangan Implementasi</div>
+        <div class="kajian-desc">Analisis atas transisi menuju sistem desil kesejahteraan dalam seleksi penerima KIP Kuliah, termasuk potensi celah data dan rekomendasi mekanisme verifikasi berlapis.</div>
+        <button class="btn-secondary" style="font-size:12px">Baca Kajian</button>
+      </div>
+      <div class="kajian-card">
+        <div class="kajian-top">
+          <span class="kajian-tag">Kajian Tata Kelola</span>
+          <span class="kajian-date">22 April 2025</span>
+        </div>
+        <div class="kajian-title">Transparansi Anggaran Pendidikan: Sudah Sejauh Mana?</div>
+        <div class="kajian-desc">Membandingkan keterbukaan data anggaran pendidikan Indonesia dengan praktik baik di negara lain, serta rekomendasi standar pelaporan yang lebih partisipatif.</div>
+        <button class="btn-secondary" style="font-size:12px">Baca Kajian</button>
+      </div>
+
+      <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:1rem 1.2rem;margin-top:1rem;font-size:13px;color:var(--gray-400)">
+        <strong style="color:var(--white)">Ingin mengusulkan topik kajian?</strong> Sampaikan lewat Forum Kebijakan, tim kami akan mempertimbangkannya untuk analisis berikutnya.
+      </div>
+    </div>
+
+    <!-- TAB: DAMPAK PROGRAM -->
+    <div class="tab-content" id="tab-dampak" style="padding-top:2rem">
+      <div class="dampak-item">
+        <div class="dampak-top">
+          <div>
+            <div class="dampak-title">Mahasiswa Terbantu KIP Kuliah Menyelesaikan Studi Tepat Waktu</div>
+            <div class="dampak-sub">Dibandingkan dengan mahasiswa non-penerima pada kelompok pendapatan setara</div>
+          </div>
+          <div class="dampak-value">+18%</div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:78%"></div></div>
+        <div class="progress-label"><span>Tingkat penyelesaian tepat waktu</span><span>78%</span></div>
+      </div>
+      <div class="dampak-item">
+        <div class="dampak-top">
+          <div>
+            <div class="dampak-title">Penurunan Angka Putus Kuliah karena Alasan Ekonomi</div>
+            <div class="dampak-sub">Pada kampus yang menjadi mitra pemantauan EduWatch</div>
+          </div>
+          <div class="dampak-value">-11%</div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:64%"></div></div>
+        <div class="progress-label"><span>Efektivitas intervensi program</span><span>64%</span></div>
+      </div>
+      <div class="dampak-item">
+        <div class="dampak-top">
+          <div>
+            <div class="dampak-title">Laporan Masyarakat yang Ditindaklanjuti Menjadi Perubahan Kebijakan</div>
+            <div class="dampak-sub">Sejak fitur Suara Kampus diluncurkan</div>
+          </div>
+          <div class="dampak-value">312 laporan</div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:56%"></div></div>
+        <div class="progress-label"><span>Dari total laporan masuk</span><span>56%</span></div>
+      </div>
+
+      <div class="testi-card" style="margin-top:1.5rem">
+        <div class="testi-quote">"Setelah rutin membaca Insight Pendidikan, saya jadi lebih paham bagaimana anggaran dan kebijakan saling terkait — dan berani ikut menyuarakan pendapat."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">D</div>
+          <div>
+            <div class="testi-name">Dinda Ayu</div>
+            <div class="testi-univ">Universitas Airlangga</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer style="margin-top:2rem">
+    <div class="footer-inner">
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 EduWatch</div>
+        <div class="footer-disclaimer">EduWatch dikelola oleh Dewan Pengawas Multi-Pihak dan didanai sepenuhnya oleh hibah publik serta donasi.</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const pages = ['home','dashboard','mahasiswa','suara','forum','insight'];
+
+  function showPage(name, tabId) {
+    // Update pages
+    pages.forEach(p => {
+      document.getElementById('page-' + p).classList.remove('active');
+    });
+    document.getElementById('page-' + name).classList.add('active');
+
+    // Update nav links
+    document.querySelectorAll('nav a[data-page]').forEach(a => {
+      a.classList.toggle('active', a.dataset.page === name);
+    });
+
+    // Jump to a specific tab if requested (e.g. from dropdown submenu)
+    if (tabId) {
+      const targetBtn = document.querySelector('#page-' + name + ' .tab-btn[data-tab="' + tabId + '"]');
+      if (targetBtn) switchTab(targetBtn, tabId);
+    }
+
+    // Close notif
+    document.getElementById('notifPanel').classList.remove('show');
+    window.scrollTo(0, 0);
+  }
+
+  function toggleNotif() {
+    document.getElementById('notifPanel').classList.toggle('show');
+  }
+
+  function showStudentDash() {
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('studentDash').style.display = 'block';
+  }
+
+  function showDesilResult() {
+    const el = document.getElementById('desilResult');
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function switchTab(btn, tabId) {
+    // Update tab buttons
+    btn.closest('.tab-nav').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // Update tab content
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+  }
+
+  function votePoll(el) {
+    el.style.outline = '2px solid var(--accent)';
+    el.style.background = 'rgba(59,130,246,0.2)';
+  }
+
+  // Close notif when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.btn-notif') && !e.target.closest('.notif-panel')) {
+      document.getElementById('notifPanel').classList.remove('show');
+    }
+  });
+</script>
+</body>
+</html>
